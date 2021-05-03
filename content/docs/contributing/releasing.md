@@ -1,8 +1,8 @@
 ---
 title: Contribution Releases
 id: /docs/contributing/releasing
-prev: /docs/contributing/setting-up
-next: /docs/contributing/troubleshooting
+prev: /content/docs/contributing/setting-up.md
+next: /content/docs/contributing/troubleshooting.md
 consumes:
   - file: /RELEASE.md
     details: 'Shares the release process, should mirror'
@@ -10,6 +10,7 @@ consumes:
     details: Uses publish command
   - file: README.md
     details: 'Shows crelease process, should mirror'
+_template: doc
 ---
 
 ## Overarching Process

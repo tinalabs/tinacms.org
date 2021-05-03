@@ -1,10 +1,10 @@
 ---
 title: External APIs
-prev: /docs/media
-next:
+prev: /content/docs/media.md
 consumes:
   - file: /packages/@tinacms/core/src/cms.ts
     description: Demonstrates adding APIs to CMS obj
+_template: doc
 ---
 
 **APIs** in the CMS are objects intended to communicate with third-party services. Unlike Plugins, which can modify the behavior of the CMS, APIs do not interact with Tina's UI or internals. APIs allow you to achieve [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) with Tina.

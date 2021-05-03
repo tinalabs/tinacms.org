@@ -1,10 +1,11 @@
 ---
 title: Group-List Field
-prev: /docs/plugins/fields/group
-next: /docs/plugins/fields/blocks
+prev: /content/docs/plugins/fields/group.md
+next: /content/docs/plugins/fields/blocks.md
 consumes:
   - file: /packages/tinacms/src/plugins/fields/GroupListFieldPlugin.tsx
     details: Shows group list interface
+_template: doc
 ---
 
 The **Group List** field represents a list of [group fields](/docs/plugins/fields/group). This field exports an _array of objects_.

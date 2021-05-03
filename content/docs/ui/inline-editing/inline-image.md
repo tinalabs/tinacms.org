@@ -1,13 +1,14 @@
 ---
 title: Inline Image
-prev: /docs/ui/inline-editing/inline-wysiwyg
-next: /docs/ui/inline-editing/inline-group
+prev: /content/docs/ui/inline-editing/inline-wysiwyg.md
+next: /content/docs/ui/inline-editing/inline-group.md
 consumes:
   - file: /packages/react-tinacms-inline/src/inline-field-image.tsx
     description: Shows InlineImage
   - file: /packages/react-tinacms-inline/src/inline-field.tsx
     description: Depends on InlineField
 last_edited: '2020-09-24T18:11:37.665Z'
+_template: doc
 ---
 
 The `InlineImage` field represents an image input. This field supports drag and drop upload, or via clicking on the image to select media from the local filesystem.
@@ -244,21 +245,20 @@ Below is an example of how you could **pass children** as a to `InlineImage` to 
 
 You can optionally pass specific widths to the image element, but the example below shows how you could [use padding to create a container with an aspect ratio](https://css-tricks.com/aspect-ratio-boxes/) (in this case a square).
 
-Don't forget to update your `next.config.js` if you're planning on passing in sources from external websites. 
-
+Don't forget to update your `next.config.js` if you're planning on passing in sources from external websites.
 
 ```jsx
 import { InlineForm, InlineImage } from 'react-tinacms-inline'
-import { useGithubJsonForm } from "react-tinacms-github";
+import { useGithubJsonForm } from 'react-tinacms-github'
 import { usePlugin, useCMS } from 'tinacms'
 import Image from '@next/image'
 
 // Using InlineImage with next/image
-export function Hero({ file, formConfig }) { 
+export function Hero({ file, formConfig }) {
   const cms = useCMS()
-  
+
   // Note for simplicity's sake, the below assumes you're passing file and formConfig props.
-  const [data, form] = useGithubJsonForm(file, formConfig);
+  const [data, form] = useGithubJsonForm(file, formConfig)
 
   usePlugin(form)
 
@@ -267,16 +267,16 @@ export function Hero({ file, formConfig }) {
       <InlineImage
         name="image"
         parse={(media: any) => {
-          return `/${media.id}`;
+          return `/${media.id}`
         }}
-        uploadDir={() => "/images"}
+        uploadDir={() => '/images'}
         alt="Some descriptive alt text here"
       >
-        {(props) => (
+        {props => (
           <div
             style={{
               height: 0,
-              paddingBottom: "100%"
+              paddingBottom: '100%',
             }}
           >
             <Image

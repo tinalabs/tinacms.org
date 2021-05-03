@@ -1,7 +1,6 @@
 ---
 title: Creating Custom Fields
-prev: /docs/plugins/fields/html
-next: null
+prev: /content/docs/plugins/fields/html.md
 consumes:
   - file: /packages/@tinacms/core/src/plugins.ts
     details: Uses the add method from plugin manager
@@ -9,6 +8,7 @@ consumes:
     details: Shows the field plugin interface
   - file: /packages/@tinacms/forms/src/form.ts
     details: Depends on Field props
+_template: doc
 ---
 
 There are two ways to create custom fields with Tina:

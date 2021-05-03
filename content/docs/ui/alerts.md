@@ -1,7 +1,8 @@
 ---
 title: Alerts
-prev: /docs/ui/inline-editing
-next: /docs/ui/styles
+prev: /content/docs/ui/inline-editing.md
+next: /content/docs/ui/styles.md
+_template: doc
 ---
 
 The CMS' **alerts** feature allows you to display short, ephemeral messages to users.

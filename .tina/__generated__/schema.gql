@@ -46,15 +46,17 @@ type Section {
   documents: [Document]
 }
 
-union SectionDocumentUnion = Blog_Document
+union SectionDocumentUnion = Doc_Document | Blog_Document
 
 input SectionParams {
+  doc: Doc_Input
   blog: Blog_Input
 }
 
 type Mutation {
   addPendingDocument(relativePath: String, collection: String, template: String): Document
   updateDocument(relativePath: String, params: SectionParams): SectionDocumentUnion
+  updateDocDocument(relativePath: String, params: Doc_Input): Doc_Document
   updateBlogDocument(relativePath: String, params: Blog_Input): Blog_Document
 }
 
@@ -63,8 +65,119 @@ type Query {
   getDocument(collection: String, relativePath: String): SectionDocumentUnion
   getCollections: [Section]
   getCollection(collection: String): Section
+  getDocDocument(relativePath: String): Doc_Document
+  getDocList: [Doc_Document]
   getBlogDocument(relativePath: String): Blog_Document
   getBlogList: [Blog_Document]
+}
+
+union Doc_Data = Doc_Doc_Data
+
+input Doc_Input {
+  doc: Doc_Doc_Input
+}
+
+union Doc_Values = Doc_Doc_Values
+
+union Doc_Form = Doc_Doc_Form
+
+type Doc_Document implements Node & Document {
+  id: ID!
+  sys: SystemInfo
+  data: Doc_Data
+  values: Doc_Values
+  form: Doc_Form
+}
+
+type Doc_Consumes_Data {
+  file: String
+  description: String
+  details: String
+}
+
+type Doc_Doc_Data {
+  title: String
+  author: String
+  date: String
+  prev: Blog_Document
+  id: String
+  last_edited: String
+  next: Blog_Document
+  consumes: [Doc_Consumes_Data]
+  _body: String
+}
+
+type Doc_Consumes_Values {
+  file: String
+  description: String
+  details: String
+}
+
+type Doc_Doc_Values {
+  title: String
+  author: String
+  date: String
+  prev: Reference
+  id: String
+  last_edited: String
+  next: Reference
+  consumes: [Doc_Consumes_Values]
+  _body: String
+  _template: String
+}
+
+type TextField implements FormField {
+  name: String
+  label: String
+  component: String
+}
+
+type SelectField implements FormField {
+  name: String
+  label: String
+  component: String
+  options: [String]
+}
+
+union Doc_Consumes_FormFieldsUnion = TextField
+
+type Doc_Consumes_GroupListField implements FormField {
+  name: String
+  label: String
+  component: String
+  fields: [Doc_Consumes_FormFieldsUnion]
+}
+
+type TextareaField implements FormField {
+  name: String
+  label: String
+  component: String
+}
+
+union Doc_Doc_FormFieldsUnion = TextField | SelectField | Doc_Consumes_GroupListField | TextareaField
+
+type Doc_Doc_Form {
+  label: String
+  name: String
+  fields: [Doc_Doc_FormFieldsUnion]
+}
+
+input Doc_Consumes_Input {
+  file: String
+  description: String
+  details: String
+}
+
+input Doc_Doc_Input {
+  title: String
+  author: String
+  date: String
+  prev: String
+  id: String
+  last_edited: String
+  next: String
+  consumes: [Doc_Consumes_Input]
+  _body: String
 }
 
 union Blog_Data = Basic_Doc_Data
@@ -87,6 +200,7 @@ type Blog_Document implements Node & Document {
 
 type Basic_Consumes_Data {
   file: String
+  description: String
   details: String
 }
 
@@ -104,6 +218,7 @@ type Basic_Doc_Data {
 
 type Basic_Consumes_Values {
   file: String
+  description: String
   details: String
 }
 
@@ -120,23 +235,10 @@ type Basic_Doc_Values {
   _template: String
 }
 
-type TextField implements FormField {
-  name: String
-  label: String
-  component: String
-}
-
 type BooleanField implements FormField {
   name: String
   label: String
   component: String
-}
-
-type SelectField implements FormField {
-  name: String
-  label: String
-  component: String
-  options: [String]
 }
 
 union Basic_Consumes_FormFieldsUnion = TextField
@@ -146,12 +248,6 @@ type Basic_Consumes_GroupListField implements FormField {
   label: String
   component: String
   fields: [Basic_Consumes_FormFieldsUnion]
-}
-
-type TextareaField implements FormField {
-  name: String
-  label: String
-  component: String
 }
 
 union Basic_Doc_FormFieldsUnion = TextField | BooleanField | SelectField | Basic_Consumes_GroupListField | TextareaField
@@ -164,6 +260,7 @@ type Basic_Doc_Form {
 
 input Basic_Consumes_Input {
   file: String
+  description: String
   details: String
 }
 

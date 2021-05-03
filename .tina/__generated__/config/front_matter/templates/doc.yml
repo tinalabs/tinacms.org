@@ -1,22 +1,16 @@
 ---
-name: basic
-label: Basic
+name: doc
+label: Doc Teamplte
 fields:
-  - name: date
-    type: text
-    label: Date
-  - name: author
-    type: text
-    label: Author
-  - name: last_edited
-    type: text
-    label: Last Edited
   - name: title
     type: text
     label: Title
-  - name: draft
-    type: boolean
-    label: Draft
+  - name: author
+    type: text
+    label: Author
+  - name: date
+    type: text
+    label: Date
   - name: prev
     label: Prev
     type: select
@@ -24,6 +18,12 @@ fields:
       source:
         type: pages
         section: blog
+  - name: id
+    type: text
+    label: ID
+  - name: last_edited
+    type: text
+    label: Last Edited
   - name: next
     label: Next
     type: select

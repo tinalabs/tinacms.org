@@ -1,12 +1,13 @@
 ---
 title: Inline Textarea
-prev: /docs/ui/inline-editing/inline-text
-next: /docs/ui/inline-editing/inline-wysiwyg
+prev: /content/docs/ui/inline-editing/inline-text.md
+next: /content/docs/ui/inline-editing/inline-wysiwyg.md
 consumes:
   - file: /packages/react-tinacms-inline/src/inline-field-textarea.tsx
     description: Shows InlineTextarea
   - file: /packages/react-tinacms-inline/src/inline-field.tsx
     description: Depends on InlineField
+_template: doc
 ---
 
 The `InlineTextarea` component represents a **multi-line text input**. It should be used for content values that are long strings: for example, a page description.

@@ -1,8 +1,8 @@
 ---
 title: List Field
-prev: /docs/plugins/fields/tags
-next: /docs/plugins/fields/group
-consumes:
+prev: /content/docs/plugins/fields/tags.md
+next: /content/docs/plugins/fields/group.md
+_template: doc
 ---
 
 The **List Field** represents an array of [primitive](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) values — specifically strings or numbers.

@@ -1,12 +1,13 @@
 ---
 title: Image Field
-prev: /docs/plugins/fields/number
-next: /docs/plugins/fields/color
+prev: /content/docs/plugins/fields/number.md
+next: /content/docs/plugins/fields/color.md
 consumes:
   - file: /packages/tinacms/src/plugins/fields/ImageFieldPlugin.tsx
     details: Shows image field interface and how to use
   - file: /packages/@tinacms/fields/src/ImageUpload/ImageUpload.tsx
     details: References the image field and upload config
+_template: doc
 ---
 
 The `image` field is used for content values that point to an image used on the page. This field allows you to upload new images by via dragging or selection in Finder. Note this field does not handle any images included in the Markdown body, those would be handled by the [markdown](/docs/plugins/fields/markdown) component.

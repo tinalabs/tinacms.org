@@ -1,12 +1,13 @@
 ---
 title: Radio Group Field
-prev: /docs/plugins/fields/toggle
-next: /docs/plugins/fields/select
+prev: /content/docs/plugins/fields/toggle.md
+next: /content/docs/plugins/fields/select.md
 consumes:
   - file: /packages/@tinacms/fields/src/RadioGroup.tsx
     details: Shows radio group field and Option interfaces
   - file: /packages/@tinacms/fields/src/plugins/RadioGroupFieldPlugin.tsx
     details: Shows radio group field and Option interfaces
+_template: doc
 ---
 
 The `radio-group` field represents a group of radio inputs. There are two variants that can be used, "radio" and "button", and can rendered in a "horizontal" or "vertical" direction. The "radio" variant in a "horizontal" direction is used by default.

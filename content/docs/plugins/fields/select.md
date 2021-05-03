@@ -1,12 +1,13 @@
 ---
 title: Select Field
-prev: /docs/plugins/fields/radio-group
-next: /docs/plugins/fields/tags
+prev: /content/docs/plugins/fields/radio-group.md
+next: /content/docs/plugins/fields/tags.md
 consumes:
   - file: /packages/@tinacms/fields/src/Select.tsx
     details: Shows select field and Option interfaces
   - file: /packages/@tinacms/fields/src/plugins/SelectFieldPlugin.tsx
     details: Shows select field and Option interfaces
+_template: doc
 ---
 
 The `select` field represents a select element.
