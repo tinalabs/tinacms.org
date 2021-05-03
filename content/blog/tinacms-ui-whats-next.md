@@ -2,8 +2,8 @@
 title: "TinaCMS UI: What's next?"
 date: '2020-03-13T00:00:00.000Z'
 author: Nolan Phillips
-next: /blog/designing-an-extensible-styling-system
-prev: /blog/introducing-visual-open-authoring
+next: /content/blog/designing-an-extensible-styling-system.md
+prev: /content/blog/introducing-visual-open-authoring.md
 _template: basic
 ---
 

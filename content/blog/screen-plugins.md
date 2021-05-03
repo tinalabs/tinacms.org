@@ -6,8 +6,8 @@ draft: false
 consumes:
   - file: /packages/tinacms/src/plugins/screen-plugin.ts
     details: Explains the screen plugin interface properties
-next: /blog/software-engineering-daily-podcast-tinacms
-prev: /blog/designing-an-extensible-styling-system
+next: /content/blog/software-engineering-daily-podcast-tinacms.md
+prev: /content/blog/designing-an-extensible-styling-system.md
 _template: basic
 ---
 

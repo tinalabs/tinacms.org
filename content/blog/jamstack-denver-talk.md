@@ -3,8 +3,8 @@ title: JAMstack Denver Talks Tina
 date: '2019-12-17T07:00:00.000Z'
 author: Kendall Strautman
 draft: false
-next: /blog/what-are-blocks
-prev: /blog/add-and-delete-files
+next: /content/blog/what-are-blocks.md
+prev: /content/blog/add-and-delete-files.md
 _template: basic
 ---
 

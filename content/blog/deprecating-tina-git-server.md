@@ -3,8 +3,8 @@ title: Updated Next.js Docs + Deprecating tina-git-server
 date: '2019-12-06T07:00:00.000Z'
 author: DJ Walker
 draft: false
-next: /blog/dynamic-plugin-system
-prev: /blog/using-tinacms-with-nextjs
+next: /content/blog/dynamic-plugin-system.md
+prev: /content/blog/using-tinacms-with-nextjs.md
 _template: basic
 ---
 

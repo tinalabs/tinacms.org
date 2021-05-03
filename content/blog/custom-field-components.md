@@ -12,8 +12,8 @@ consumes:
     details: Depends on the Field interface
   - file: /packages/@tinacms/form-builder/src/field-plugin.tsx
     details: Depends on the FieldPlugin interface
-next: /blog/custom-field-plugins
-prev: /blog/exporting-wordpress-content-to-gatsby
+next: /content/blog/custom-field-plugins.md
+prev: /content/blog/exporting-wordpress-content-to-gatsby.md
 _template: basic
 ---
 

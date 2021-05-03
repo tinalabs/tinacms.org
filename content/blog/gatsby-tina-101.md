@@ -10,8 +10,8 @@ consumes:
     details: Shows how to use inlineRemarkForm HOC
   - file: /packages/@tinacms/fields/src/Wysiwyg/Wysiwyg.tsx
     details: TinaField uses Wysiwyg component for inline editing
-next: /blog/introducing-visual-open-authoring
-prev: /blog/custom-field-plugins
+next: /content/blog/introducing-visual-open-authoring.md
+prev: /content/blog/custom-field-plugins.md
 _template: basic
 ---
 

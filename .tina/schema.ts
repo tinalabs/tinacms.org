@@ -38,13 +38,15 @@ export default defineSchema({
             },
             {
               name: 'prev',
-              type: 'text',
+              type: 'reference',
               label: 'Prev',
+              collection: 'blog',
             },
             {
               name: 'next',
-              type: 'text',
+              type: 'reference',
               label: 'Next',
+              collection: 'blog',
             },
             {
               name: 'consumes',

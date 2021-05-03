@@ -159,8 +159,8 @@ export type Basic_Doc_Data = {
   last_edited?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   draft?: Maybe<Scalars['Boolean']>;
-  prev?: Maybe<Scalars['String']>;
-  next?: Maybe<Scalars['String']>;
+  prev?: Maybe<Blog_Document>;
+  next?: Maybe<Blog_Document>;
   consumes?: Maybe<Array<Maybe<Basic_Consumes_Data>>>;
   _body?: Maybe<Scalars['String']>;
 };
@@ -178,8 +178,8 @@ export type Basic_Doc_Values = {
   last_edited?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   draft?: Maybe<Scalars['Boolean']>;
-  prev?: Maybe<Scalars['String']>;
-  next?: Maybe<Scalars['String']>;
+  prev?: Maybe<Scalars['Reference']>;
+  next?: Maybe<Scalars['Reference']>;
   consumes?: Maybe<Array<Maybe<Basic_Consumes_Values>>>;
   _body?: Maybe<Scalars['String']>;
   _template?: Maybe<Scalars['String']>;
@@ -199,6 +199,14 @@ export type BooleanField = FormField & {
   component?: Maybe<Scalars['String']>;
 };
 
+export type SelectField = FormField & {
+  __typename?: 'SelectField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
 export type Basic_Consumes_FormFieldsUnion = TextField;
 
 export type Basic_Consumes_GroupListField = FormField & {
@@ -216,7 +224,7 @@ export type TextareaField = FormField & {
   component?: Maybe<Scalars['String']>;
 };
 
-export type Basic_Doc_FormFieldsUnion = TextField | BooleanField | Basic_Consumes_GroupListField | TextareaField;
+export type Basic_Doc_FormFieldsUnion = TextField | BooleanField | SelectField | Basic_Consumes_GroupListField | TextareaField;
 
 export type Basic_Doc_Form = {
   __typename?: 'Basic_Doc_Form';

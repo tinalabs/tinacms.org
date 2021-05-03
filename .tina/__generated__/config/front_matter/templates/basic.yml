@@ -18,11 +18,19 @@ fields:
     type: boolean
     label: Draft
   - name: prev
-    type: text
     label: Prev
+    type: select
+    config:
+      source:
+        type: pages
+        section: blog
   - name: next
-    type: text
     label: Next
+    type: select
+    config:
+      source:
+        type: pages
+        section: blog
   - name: consumes
     label: Consumes
     type: field_group_list

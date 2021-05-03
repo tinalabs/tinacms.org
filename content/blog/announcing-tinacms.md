@@ -3,7 +3,7 @@ title: 'Announcing TinaCMS '
 date: '2019-10-16T07:00:00.000Z'
 author: Scott Gallant
 draft: false
-next: /blog/creating-markdown-drafts
+next: /content/blog/creating-markdown-drafts.md
 _template: basic
 ---
 

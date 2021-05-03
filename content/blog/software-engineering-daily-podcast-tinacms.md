@@ -3,8 +3,8 @@ title: Software Engineering Daily Talks TinaCMS
 date: '2020-04-30T07:00:00.000Z'
 author: Kendall Strautman
 draft: false
-prev: /blog/screen-plugins
-next: /blog/upgrade-notice-improved-github-security
+prev: /content/blog/screen-plugins.md
+next: /content/blog/upgrade-notice-improved-github-security.md
 _template: basic
 ---
 

@@ -3,8 +3,8 @@ title: Export WordPress Content to Markdown and Gatsby
 date: '2020-01-13T00:00:00.000Z'
 draft: false
 author: Mitch MacKenzie
-next: /blog/custom-field-components
-prev: /blog/three-ways-to-edit-md
+next: /content/blog/custom-field-components.md
+prev: /content/blog/three-ways-to-edit-md.md
 _template: basic
 ---
 

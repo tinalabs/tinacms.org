@@ -14,6 +14,7 @@ import path from 'path'
 import { BlogPostCreatorPlugin } from '../tinacms/BlogPostCreator'
 import { ReleaseNotesCreatorPlugin } from '../tinacms/ReleaseNotesCreator'
 import { NextGithubMediaStore } from '../utils/plugins/NextGithubMediaStore'
+import { LocalClient } from 'tina-graphql-gateway'
 
 // the following line will cause all content files to be available in a serverless context
 path.resolve('./content/')
@@ -27,10 +28,12 @@ const github = new GithubClient({
 
 const MainLayout = ({ Component, pageProps }) => {
   const tinaConfig = {
-    enabled: pageProps.preview,
+    // enabled: pageProps.preview,
+    enabled: true,
     toolbar: pageProps.preview,
-    sidebar: pageProps.preview,
+    sidebar: true,
     apis: {
+      tina: new LocalClient(),
       github,
       storage:
         typeof window !== 'undefined'

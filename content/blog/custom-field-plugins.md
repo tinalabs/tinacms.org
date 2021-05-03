@@ -10,8 +10,8 @@ consumes:
     details: Example shows useLocalJsonForm in use
   - file: /packages/@tinacms/form-builder/src/field-plugin.tsx
     details: Depends on the FieldPlugin interface
-next: /blog/gatsby-tina-101
-prev: /blog/custom-field-components
+next: /content/blog/gatsby-tina-101.md
+prev: /content/blog/custom-field-components.md
 _template: basic
 ---
 

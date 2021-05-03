@@ -3,8 +3,8 @@ title: 'Upgrade Notice: Improved GitHub Security'
 date: '2020-06-23T13:47:03-03:00'
 author: Joel Huggett
 last_edited: 'July 30, 2020'
-next: /blog/inline-editing-project
-prev: /blog/software-engineering-daily-podcast-tinacms
+next: /content/blog/inline-editing-project.md
+prev: /content/blog/software-engineering-daily-podcast-tinacms.md
 _template: basic
 ---
 

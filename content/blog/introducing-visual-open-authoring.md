@@ -3,8 +3,8 @@ title: Introducing Visual Open Authoring
 date: '2020-03-09T07:00:00.000Z'
 author: Scott Gallant
 draft: false
-next: /blog/tinacms-ui-whats-next
-prev: /blog/gatsby-tina-101
+next: /content/blog/tinacms-ui-whats-next.md
+prev: /content/blog/gatsby-tina-101.md
 _template: basic
 ---
 

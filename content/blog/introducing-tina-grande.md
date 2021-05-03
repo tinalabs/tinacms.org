@@ -3,8 +3,8 @@ title: "Introducing Tina Grande \U0001F389"
 date: '2019-11-21T14:58:24.451Z'
 draft: false
 author: Scott Byrne
-next: /blog/using-tinacms-with-nextjs
-prev: /blog/simple-markdown-blog-nextjs
+next: /content/blog/using-tinacms-with-nextjs.md
+prev: /content/blog/simple-markdown-blog-nextjs.md
 _template: basic
 ---
 

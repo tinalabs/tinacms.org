@@ -3,8 +3,8 @@ title: How can my editors edit a TinaCMS site?
 date: '2019-12-23T10:00:00.000Z'
 draft: false
 author: James O'Halloran
-next: /blog/using-tinacms-on-gatsby-cloud
-prev: /blog/what-are-blocks
+next: /content/blog/using-tinacms-on-gatsby-cloud.md
+prev: /content/blog/what-are-blocks.md
 _template: basic
 ---
 

@@ -2,7 +2,7 @@
 title: Inline Editing Revamped
 date: '2020-06-29T11:28:19-03:00'
 author: Kendall Strautman
-prev: /blog/upgrade-notice-improved-github-security
+prev: /content/blog/upgrade-notice-improved-github-security.md
 _template: basic
 ---
 

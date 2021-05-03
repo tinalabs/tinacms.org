@@ -3,8 +3,13 @@ import styled, { css } from 'styled-components'
 import RightArrowSvg from '../../public/svg/right-arrow.svg'
 import { DynamicLink } from '../ui/DynamicLink'
 interface NextPrevPageProps {
-  title: string
-  slug: string
+  id: string
+  sys: {
+    filename: string
+  }
+  data: {
+    title: string
+  }
 }
 
 interface PaginationProps {
@@ -15,20 +20,20 @@ interface PaginationProps {
 export function DocsPagination({ prevPage, nextPage }: PaginationProps) {
   return (
     <Wrapper>
-      {prevPage && prevPage.slug && (
-        <DynamicLink href={`${prevPage.slug}`} passHref>
+      {prevPage && prevPage.sys && prevPage.sys.filename && (
+        <DynamicLink href={`${prevPage.sys.filename}`} passHref>
           <PaginationLink previous>
             <span>Previous</span>
-            <h5>{prevPage.title}</h5>
+            <h5>{prevPage.data.title}</h5>
             <RightArrowSvg />
           </PaginationLink>
         </DynamicLink>
       )}
-      {nextPage && nextPage.slug && (
-        <DynamicLink href={`${nextPage.slug}`} passHref>
+      {nextPage && nextPage.sys && nextPage.sys.filename && (
+        <DynamicLink href={`${nextPage.sys.filename}`} passHref>
           <PaginationLink>
             <span>Next</span>
-            <h5>{nextPage.title}</h5>
+            <h5>{nextPage.data.title}</h5>
             <RightArrowSvg />
           </PaginationLink>
         </DynamicLink>
