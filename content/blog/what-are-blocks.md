@@ -3,8 +3,9 @@ title: What are Blocks?
 date: '2019-12-18T03:15:26.426Z'
 draft: false
 author: DJ Walker
-next: /blog/editing-on-the-cloud
-prev: /blog/jamstack-denver-talk
+next: /content/blog/editing-on-the-cloud.md
+prev: /content/blog/jamstack-denver-talk.md
+_template: basic
 ---
 
 > "There are only two hard things in Computer Science: cache invalidation and naming things."

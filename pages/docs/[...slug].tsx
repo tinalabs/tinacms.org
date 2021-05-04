@@ -8,87 +8,182 @@ import { InlineTextarea } from 'react-tinacms-inline'
 import { useGithubMarkdownForm } from 'react-tinacms-github'
 import { getDocProps } from 'utils/docs/getDocProps'
 import { InlineGithubForm } from 'components/layout/InlineGithubForm'
+import { useGraphqlForms } from 'tina-graphql-gateway'
 import { GithubError } from 'next-tinacms-github'
 import { InlineWysiwyg } from 'components/inline-wysiwyg'
 import { usePlugin } from 'tinacms'
 import Toc from '../../components/toc'
 import { createTocListener } from 'utils'
 import { useLastEdited } from 'utils/useLastEdited'
+import { Form, useCMS, GlobalFormPlugin } from 'tinacms'
 import { openGraphImage } from 'utils/open-graph-image'
 import Error from 'next/error'
 import { NotFoundError } from 'utils/error/NotFoundError'
+import * as Tina from '../../.tina/__generated__/types'
 
 function DocTemplate(props) {
   // fallback workaround
   if (props.notFound) {
     return <Error statusCode={404} />
   }
+  console.log(props.variables)
 
-  // Registers Tina Form
-  const [data, form] = useGithubMarkdownForm(props.file, formOptions)
+  // // Registers Tina Form
+  // const [data, form] = useGithubMarkdownForm(props.file, formOptions)
 
-  const isBrowser = typeof window !== `undefined`
+  // const isBrowser = typeof window !== `undefined`
   const contentRef = React.useRef<HTMLDivElement>(null)
-  const frontmatter = data.frontmatter
-  const markdownBody = data.markdownBody
-  const excerpt = props.file.data.excerpt
-  const tocItems = props.tocItems
-  const [activeIds, setActiveIds] = useState([])
+  const cms = useCMS()
+  const [payload, isLoading] = useGraphqlForms<{
+    getBlogDocument: { data: unknown }
+  }>({
+    query: gql => gql(queryString),
+    formify: ({ formConfig, createForm, skip }) => {
+      if (formConfig.id === 'getDocNavDocument') {
+        const form = new Form(formConfig)
+        // The site nav will be a global plugin
+        cms.plugins.add(new GlobalFormPlugin(form))
+        return form
+      }
 
-  React.useEffect(() => {
-    if (!isBrowser || !contentRef.current) {
-      return
-    }
-    const activeTocListener = createTocListener(contentRef, setActiveIds)
-    window.addEventListener('scroll', activeTocListener)
+      return createForm(formConfig)
+    },
+    variables: props.variables,
+  })
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
-    return () => window.removeEventListener('scroll', activeTocListener)
-  }, [contentRef, data])
+  const document = isLoading
+    ? props.getDocDocument.data
+    : (payload.getDocDocument.data as Tina.Doc_Data)
+  const nav = isLoading
+    ? props.getDocNavDocument.data
+    : (payload.getDocNavDocument.data as Tina.DocNav_Data)
+  // const frontmatter = data.frontmatter
+  // const markdownBody = data.markdownBody
+  // const excerpt = props.file.data.excerpt
+  // const tocItems = props.tocItems
+  // const [activeIds, setActiveIds] = useState([])
 
-  usePlugin(form)
-  useLastEdited(form)
+  // React.useEffect(() => {
+  //   if (!isBrowser || !contentRef.current) {
+  //     return
+  //   }
+  //   const activeTocListener = createTocListener(contentRef, setActiveIds)
+  //   window.addEventListener('scroll', activeTocListener)
+
+  //   return () => window.removeEventListener('scroll', activeTocListener)
+  // }, [contentRef, data])
+
+  // usePlugin(form)
+  // useLastEdited(form)
 
   return (
-    <InlineGithubForm form={form}>
+    <>
       <NextSeo
-        title={frontmatter.title}
+        title={document?.title}
         titleTemplate={'%s | TinaCMS Docs'}
-        description={excerpt}
+        description={document.title}
         openGraph={{
-          title: frontmatter.title,
-          description: excerpt,
-          images: [openGraphImage(frontmatter.title, '| TinaCMS Docs')],
+          title: document.title,
+          description: document.title,
+          images: [openGraphImage(document.title, '| TinaCMS Docs')],
         }}
       />
-      <DocsLayout navItems={props.docsNav}>
+      <DocsLayout navDoc={nav} navItems={[]}>
         <DocsGrid>
           <DocGridHeader>
-            <DocsPageTitle>
-              <InlineTextarea name="frontmatter.title" />
-            </DocsPageTitle>
+            <DocsPageTitle>{document.title}</DocsPageTitle>
           </DocGridHeader>
-          <DocGridToc>
-            <Toc tocItems={tocItems} activeIds={activeIds} />
-          </DocGridToc>
+          {/* <DocGridToc>
+          <Toc tocItems={tocItems} activeIds={activeIds} />
+        </DocGridToc> */}
           <DocGridContent ref={contentRef}>
             <hr />
-            <InlineWysiwyg name="markdownBody">
-              <MarkdownContent escapeHtml={false} content={markdownBody} />
-            </InlineWysiwyg>
-            <LastEdited date={frontmatter.last_edited} />
-            {(props.prevPage?.slug !== null ||
-              props.nextPage?.slug !== null) && (
-              <DocsPagination
-                prevPage={props.prevPage}
-                nextPage={props.nextPage}
-              />
-            )}
+            <MarkdownContent escapeHtml={false} content={document._body} />
+            <LastEdited date={document.last_edited} />
+            {/* {(props.prevPage?.slug !== null || props.nextPage?.slug !== null) && (
+            <DocsPagination
+              prevPage={props.prevPage}
+              nextPage={props.nextPage}
+            />
+          )} */}
           </DocGridContent>
         </DocsGrid>
       </DocsLayout>
-    </InlineGithubForm>
+    </>
   )
 }
+
+const queryString = `#graphql
+query DocQuery($relativePath: String!) {
+  getDocNavDocument(relativePath: "main.md") {
+    id
+    sys {
+      filename
+    }
+    data {
+      __typename
+      ... on DocNav_Doc_Data {
+        title
+        sections {
+          __typename
+          ... on DocSection_Data {
+            slug
+            title
+            subItems {
+              label
+              value {
+                sys {
+                  collection {
+                    path
+                    slug
+                  }
+                  breadcrumbs(excludeExtension: true)
+                }
+              }
+              subItems {
+                label
+                value {
+                  sys {
+                    breadcrumbs(excludeExtension: true)
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  getDocDocument(relativePath: $relativePath) {
+    id
+    data {
+      __typename
+      ... on Doc_Doc_Data {
+        title
+        author
+        date
+        last_edited
+        _body
+        prev {
+          id
+          data {
+            __typename
+          }
+        }
+        next {
+          id
+          data {
+            __typename
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 export default DocTemplate
 
@@ -103,7 +198,27 @@ export const getStaticProps: GetStaticProps = async function(props) {
   const slug = slugs.join('/')
 
   try {
-    return await getDocProps(props, slug)
+    // const { slug } = ctx.params
+    const response = await fetch('http://localhost:4001/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: queryString,
+        variables: { relativePath: `${slug}.md` },
+      }),
+    })
+    const { data } = await response.json()
+
+    return {
+      props: {
+        ...JSON.parse(JSON.stringify(data)),
+        variables: {
+          relativePath: `${slug}.md`,
+        },
+      },
+    }
   } catch (e) {
     if (e instanceof GithubError) {
       return {

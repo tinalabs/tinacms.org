@@ -1,0 +1,41 @@
+---
+name: docSection
+label: Doc Section
+fields:
+  - name: id
+    type: text
+    label: ID
+  - name: slug
+    type: text
+    label: Slug
+  - name: title
+    type: text
+    label: Title
+  - name: subItems
+    type: field_group_list
+    label: Sub Items
+    fields:
+      - name: label
+        type: text
+        label: Label
+      - name: value
+        label: Value
+        type: select
+        config:
+          source:
+            type: pages
+            section: doc
+      - name: subItems
+        type: field_group_list
+        label: subItems
+        fields:
+          - name: label
+            type: text
+            label: Label
+          - name: value
+            label: Value
+            type: select
+            config:
+              source:
+                type: pages
+                section: doc

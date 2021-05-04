@@ -1,7 +1,6 @@
 ---
 title: Inline Blocks
-prev: /docs/ui/inline-editing/inline-group
-next: null
+prev: /content/docs/ui/inline-editing/inline-group.md
 consumes:
   - file: /packages/react-tinacms-inline/src/inline-form.tsx
     description: InlineForm
@@ -13,6 +12,7 @@ consumes:
     description: Shows Inline Blocks interface and gives example
   - file: /packages/react-modals/src/ModalProvider.tsx
     description: Uses ModalProvider for Block Settings
+_template: doc
 ---
 
 Inline Blocks combine the content modelling flexibility of regular [Blocks](/blog/what-are-blocks) with the improved editing experience of [Inline Editing](/docs/ui/inline-editing).

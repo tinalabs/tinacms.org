@@ -1,0 +1,46 @@
+---
+name: basic
+label: Basic
+fields:
+  - name: date
+    type: text
+    label: Date
+  - name: author
+    type: text
+    label: Author
+  - name: last_edited
+    type: text
+    label: Last Edited
+  - name: title
+    type: text
+    label: Title
+  - name: draft
+    type: boolean
+    label: Draft
+  - name: prev
+    label: Prev
+    type: select
+    config:
+      source:
+        type: pages
+        section: blog
+  - name: next
+    label: Next
+    type: select
+    config:
+      source:
+        type: pages
+        section: blog
+  - name: consumes
+    label: Consumes
+    type: field_group_list
+    fields:
+      - type: text
+        label: File
+        name: file
+      - type: text
+        label: Description
+        name: description
+      - type: text
+        label: Details
+        name: details

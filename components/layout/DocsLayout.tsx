@@ -7,15 +7,17 @@ import { DocumentationNavigation } from 'components/DocumentationNavigation'
 import { Footer } from './Footer'
 import { DocsTextWrapper } from './DocsTextWrapper'
 import { FeedbackForm } from 'components/forms'
+import * as Tina from '../../.tina/__generated__/types'
 
 interface DocsLayoutProps {
   navItems: any
+  navDoc: Tina.DocNav_Data
   guide?: false | { category: string }
   children: any
 }
 
 export const DocsLayout = React.memo(
-  ({ children, navItems, guide = false }: DocsLayoutProps) => {
+  ({ children, navDoc, navItems, guide = false }: DocsLayoutProps) => {
     const router = useRouter()
     return (
       <>
@@ -25,7 +27,11 @@ export const DocsLayout = React.memo(
           }}
         />
         <DocsLayoutDiv>
-          <DocumentationNavigation navItems={navItems} guide={guide} />
+          <DocumentationNavigation
+            navDoc={navDoc}
+            navItems={navItems}
+            guide={guide}
+          />
           <DocsTextWrapper>{children}</DocsTextWrapper>
           <FeedbackForm />
           <Footer light />

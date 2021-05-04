@@ -1,10 +1,11 @@
 ---
 title: Tags Field
-prev: /docs/plugins/fields/select
-next: /docs/plugins/fields/group
+prev: /content/docs/plugins/fields/select.md
+next: /content/docs/plugins/fields/group.md
 consumes:
   - file: /packages/@tinacms/fields/src/plugins/TagsFieldPlugin.tsx
     details: Shows Tags field and Option interfaces
+_template: doc
 ---
 
 The `tags` field represents a collection of tags.

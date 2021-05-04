@@ -1,7 +1,7 @@
 ---
 id: /docs/integrations/nextjs
 title: Next.js Integration
-next:
+_template: doc
 ---
 
 NextJS is a relatively open-ended framework and there are many different ways to build with it. If you're new to NextJS, [this blog](/blog/simple-markdown-blog-nextjs) is a great place to start getting familiar with the framework.

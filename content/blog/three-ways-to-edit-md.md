@@ -10,8 +10,9 @@ consumes:
     details: Shows how to use remarkForm HOC
   - file: /packages/gatsby-tinacms-remark/src/useRemarkForm.tsx
     details: Demonstrates useLocalRemarkForm usage
-next: /blog/exporting-wordpress-content-to-gatsby
-prev: /blog/using-tinacms-on-gatsby-cloud
+next: /content/blog/exporting-wordpress-content-to-gatsby.md
+prev: /content/blog/using-tinacms-on-gatsby-cloud.md
+_template: basic
 ---
 
 **Supercharge your static site with real-time content editing!** 🚀

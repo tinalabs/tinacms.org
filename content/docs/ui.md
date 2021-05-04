@@ -1,12 +1,12 @@
 ---
 title: Configure the User Interface
-prev:
-next: /docs/ui/inline-editing
+next: /content/docs/ui/inline-editing.md
 consumes:
   - file: /packages/react-sidebar/src/sidebar.ts
     details: Shows sidebar interface
   - file: /packages/react-toolbar/src/toolbar.ts
     details: Shows toolbar interface
+_template: doc
 ---
 
 There are two main UI components that support the content editing interface: the sidebar and the toolbar.

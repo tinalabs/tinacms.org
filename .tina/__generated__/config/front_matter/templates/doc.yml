@@ -1,0 +1,46 @@
+---
+name: doc
+label: Doc Teamplte
+fields:
+  - name: title
+    type: text
+    label: Title
+  - name: author
+    type: text
+    label: Author
+  - name: date
+    type: text
+    label: Date
+  - name: prev
+    label: Prev
+    type: select
+    config:
+      source:
+        type: pages
+        section: doc
+  - name: id
+    type: text
+    label: ID
+  - name: last_edited
+    type: text
+    label: Last Edited
+  - name: next
+    label: Next
+    type: select
+    config:
+      source:
+        type: pages
+        section: doc
+  - name: consumes
+    label: Consumes
+    type: field_group_list
+    fields:
+      - type: text
+        label: File
+        name: file
+      - type: text
+        label: Description
+        name: description
+      - type: text
+        label: Details
+        name: details

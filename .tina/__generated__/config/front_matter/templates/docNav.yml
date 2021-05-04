@@ -1,0 +1,13 @@
+---
+name: docNav
+label: Doc Nav
+fields:
+  - name: title
+    type: text
+    label: Title
+  - name: sections
+    label: Sections
+    type: blocks
+    template_types:
+      - docSection
+      - guideSection

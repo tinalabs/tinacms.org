@@ -1,7 +1,8 @@
 ---
 title: Editing Content
-prev: /docs/getting-started/cms-set-up
-next: /docs/getting-started/backends
+prev: /content/docs/getting-started/cms-set-up.md
+next: /content/docs/getting-started/backends.md
+_template: doc
 ---
 
 The purpose of a CMS is to allow editors to change content. [Forms](/docs/plugins/forms) are a fundamental part of this as they define the editing interface for your content. In this step, we will **create and register a form to edit data** rendered on this page.
@@ -13,7 +14,6 @@ We will use the `useForm` hook to [create the form](/docs/plugins/forms#creating
 Calling `useForm` won't automatically make our form appear in the sidebar. There are multiple ways to use forms with Tina, and the sidebar is merely one option.
 
 Although it doesn't automatically appear in the sidebar, the form returned by `useForm` is pre-configured to work as a sidebar plugin. To add this form to the sidebar, all we have to do is pass it into the `usePlugin` hook.
-
 
 > _Fun Fact:_ Forms are a type of [plugin](/docs/plugins) in Tina.
 
@@ -29,7 +29,7 @@ Although it doesn't automatically appear in the sidebar, the form returned by `u
 
 ```js
 // 1. Import `useForm` and `usePlugin`
-import { TinaProvider, TinaCMS, useCMS, useForm, usePlugin } from 'tinacms';
+import { TinaProvider, TinaCMS, useCMS, useForm, usePlugin } from 'tinacms'
 
 //...
 
@@ -72,7 +72,7 @@ function PageContent() {
       <p>{editableData.body}</p>
       <EditButton />
     </section>
-  );
+  )
 }
 
 //...
@@ -100,8 +100,8 @@ The `id` is a **unique identifier** for the form. The `id` is hard-coded in our 
 
 The `fields` array is comprised of [field definitions](/docs/plugins/fields#field-definition). All fields share a common [base configuration](/docs/plugins/fields#field-config). Field definitions need at least two properties:
 
- - a `name`, indicating the path to access the data from the values object, and
- - a `component` that displays the interface for editing the data.
+- a `name`, indicating the path to access the data from the values object, and
+- a `component` that displays the interface for editing the data.
 
 You will be working with fields a lot in Tina. To get more familiar, try to adjust the `label` property or add a new field to the array. Reference [the documentation](/docs/plugins/fields) for a full list of default field plugins.
 

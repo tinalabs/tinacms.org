@@ -1,10 +1,11 @@
 ---
 title: Group Field
-prev: /docs/plugins/fields/select
-next: /docs/plugins/fields/group-list
+prev: /content/docs/plugins/fields/select.md
+next: /content/docs/plugins/fields/group-list.md
 consumes:
   - file: /packages/tinacms/src/plugins/fields/GroupFieldPlugin.tsx
     details: Shows group field interface and how to use
+_template: doc
 ---
 
 The `group` field represents a group of values. This field is best used when there is a **single** group to be edited, typically with a single JSON object or nested frontmatter values. If there are multiple groups, checkout the [group-list](/docs/plugins/fields/group-list) field.

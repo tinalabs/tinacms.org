@@ -1,13 +1,14 @@
 ---
 title: Forms
-prev: /docs/cms
-next: /docs/plugins/fields
+prev: /content/docs/cms.md
+next: /content/docs/plugins/fields.md
 consumes:
   - file: /packages/@tinacms/react-core/src/use-form.ts
     description: Describes the useForm hooks
   - file: /packages/@tinacms/forms/src/form.ts
     description: Form configuration
 last_edited: '2020-09-10T18:49:43.520Z'
+_template: doc
 ---
 
 **Forms** in Tina are the main building blocks of your CMS. You will use Forms to:

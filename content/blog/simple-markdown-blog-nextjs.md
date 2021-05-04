@@ -3,8 +3,9 @@ title: Creating a Markdown Blog with Next.js
 date: '2019-11-16T07:00:00.000Z'
 author: Kendall Strautman
 draft: false
-next: /blog/introducing-tina-grande
-prev: /blog/creating-markdown-drafts
+next: /content/blog/introducing-tina-grande.md
+prev: /content/blog/creating-markdown-drafts.md
+_template: basic
 ---
 
 ## Tina + Next Part I

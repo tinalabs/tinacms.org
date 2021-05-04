@@ -1,12 +1,13 @@
 ---
 title: Number Field
-prev: /docs/plugins/fields/textarea
-next: /docs/plugins/fields/image
+prev: /content/docs/plugins/fields/textarea.md
+next: /content/docs/plugins/fields/image.md
 consumes:
   - file: /packages/@tinacms/fields/src/plugins/NumberFieldPlugin.tsx
     details: Shows text field interface and config options
   - file: /packages/@tinacms/fields/src/components/NumberField.ts
     details: Shows text field interface and config options
+_template: doc
 ---
 
 The `number` field represents a number input.

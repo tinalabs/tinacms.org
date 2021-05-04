@@ -3,6 +3,7 @@ import { NextSeo } from 'next-seo'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { CloseIcon, EditIcon } from '@tinacms/icons'
 import { formatDate } from '../../utils'
+import { useGraphqlForms } from 'tina-graphql-gateway'
 import {
   Layout,
   Hero,
@@ -10,92 +11,122 @@ import {
   MarkdownContent,
   DocsTextWrapper,
 } from 'components/layout'
-import { InlineTextarea } from 'react-tinacms-inline'
-import { useGithubMarkdownForm } from 'react-tinacms-github'
-import { fileToUrl } from 'utils/urls'
-import { getPageRef } from 'utils/docs/getDocProps'
-import { InlineGithubForm } from 'components/layout/InlineGithubForm'
-const fg = require('fast-glob')
-import { Button } from 'components/ui/Button'
 import Error from 'next/error'
-import { getMarkdownPreviewProps } from 'utils/getMarkdownPreviewProps'
-import { InlineWysiwyg } from 'components/inline-wysiwyg'
-import { usePlugin, useCMS } from 'tinacms'
-import { useLastEdited } from 'utils/useLastEdited'
+import { Button } from 'components/ui/Button'
+import { useCMS } from 'tinacms'
 import { LastEdited, DocsPagination } from 'components/ui'
 import { openGraphImage } from 'utils/open-graph-image'
 
-function BlogTemplate({ file, siteConfig, prevPage, nextPage }) {
-  // fallback workaround
-  if (!file) {
+function BlogTemplate({ data, variables }) {
+  if (!data) {
     return <Error statusCode={404} />
   }
+  const [payload, isLoading] = useGraphqlForms<{
+    getBlogDocument: { data: unknown }
+  }>({
+    query: gql => gql(queryString),
+    formify: ({ formConfig, createForm, skip }) => {
+      if (formConfig.id === 'getBlogDocument') {
+        // you can skip setting this up in the sidebar if you'd like
+        formConfig.fields.map(field => {
+          if (field.name === '_body') {
+            field.component = 'markdown'
+          }
+          return field
+        })
+      }
 
-  // Registers Tina Form
-  const [data, form] = useGithubMarkdownForm(file, formOptions)
-
-  usePlugin(form)
-  useLastEdited(form)
-
-  const frontmatter = data.frontmatter
-  const markdownBody = data.markdownBody
-  const excerpt = data.excerpt
+      return createForm(formConfig)
+    },
+    variables: variables,
+  })
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+  const post = isLoading
+    ? data.getBlogDocument.data
+    : payload.getBlogDocument.data
 
   return (
-    <InlineGithubForm form={form}>
-      <Layout>
-        <NextSeo
-          title={frontmatter.title}
-          titleTemplate={'%s | ' + siteConfig.title + ' Blog'}
-          description={excerpt}
-          openGraph={{
-            title: frontmatter.title,
-            description: excerpt,
-            images: [
-              openGraphImage(
-                frontmatter.title,
-                ' | TinaCMS Blog',
-                frontmatter.author
-              ),
-            ],
-          }}
-        />
-        <Hero>
-          <InlineTextarea name="frontmatter.title" />
-        </Hero>
-        <BlogWrapper>
-          <DocsTextWrapper>
-            <BlogMeta>
-              <MetaWrap>
-                <MetaBit>{formatDate(frontmatter.date)}</MetaBit>
-                <MetaBit>
-                  <span>By</span>{' '}
-                  <InlineTextarea name="frontmatter.author" />
-                </MetaBit>
-              </MetaWrap>
-              <EditLink />
-            </BlogMeta>
-            <InlineWysiwyg
-              name="markdownBody"
-              imageProps={{
-                uploadDir: () => '/img/blog',
-                parse: media => `/img/blog/${media.filename}`,
-              }}
-            >
-              <MarkdownContent escapeHtml={false} content={markdownBody} />
-            </InlineWysiwyg>
-            <LastEdited date={frontmatter.last_edited} />
-            {(prevPage?.slug !== null || nextPage?.slug !== null) && (
-              <DocsPagination prevPage={prevPage} nextPage={nextPage} />
-            )}
-          </DocsTextWrapper>
-        </BlogWrapper>
-      </Layout>
-    </InlineGithubForm>
+    <Layout>
+      <NextSeo
+        title={post.title}
+        titleTemplate={'%s | ' + 'TinaCMS Blog'}
+        description={post._body.substring(0, 150)}
+        openGraph={{
+          title: post.title,
+          description: post._body.substring(0, 150),
+          images: [openGraphImage(post.title, ' | TinaCMS Blog', post.author)],
+        }}
+      />
+      <Hero>
+        <span>{post.title}</span>
+      </Hero>
+      <BlogWrapper>
+        <DocsTextWrapper>
+          <BlogMeta>
+            <MetaWrap>
+              <MetaBit>{formatDate(post.date)}</MetaBit>
+              <MetaBit>
+                <span>By</span> {post.author}
+              </MetaBit>
+            </MetaWrap>
+            <EditLink />
+          </BlogMeta>
+          <MarkdownContent escapeHtml={false} content={post._body} />
+          <LastEdited date={post.last_edited} />
+          {(post.prev?.id !== null || post.next?.id !== null) && (
+            <DocsPagination prevPage={post.prev} nextPage={post.next} />
+          )}
+        </DocsTextWrapper>
+      </BlogWrapper>
+    </Layout>
   )
 }
 
 export default BlogTemplate
+
+const queryString = `#graphql
+query BlogPostQuery($relativePath: String!) {
+ getBlogDocument(relativePath: $relativePath) {
+   id
+   data {
+     ... on Basic_Doc_Data {
+       date
+       title
+       last_edited
+       draft
+       prev {
+         id
+         sys {
+           filename
+         }
+         data {
+           __typename
+           ...on Basic_Doc_Data {
+             title
+           }
+         }
+       }
+       next {
+         id
+         sys {
+           filename
+         }
+         data {
+           __typename
+           ...on Basic_Doc_Data {
+             title
+           }
+         }
+       }
+       _body
+       author
+     }
+   }
+ }
+}
+`
 
 /*
  ** DATA FETCHING --------------------------------------------------
@@ -107,93 +138,62 @@ export const getStaticProps: GetStaticProps = async function({
   ...ctx
 }) {
   const { slug } = ctx.params
-
-  //TODO - move to readFile
-  const { default: siteConfig } = await import('../../content/siteConfig.json')
-
-  const currentBlog = await getMarkdownPreviewProps(
-    `content/blog/${slug}.md`,
-    preview,
-    previewData
-  )
-
-  if ((currentBlog.props.error?.status || '') === 'ENOENT') {
-    return { props: {} } // will render the 404 error
-  }
+  const response = await fetch('http://localhost:4001/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: queryString,
+      variables: { relativePath: `${slug}.md` },
+    }),
+  })
+  const { data } = await response.json()
 
   return {
     props: {
-      ...currentBlog.props,
-      nextPage: await getPageRef(
-        currentBlog.props.file.data.frontmatter.next,
-        preview,
-        previewData
-      ),
-      prevPage: await getPageRef(
-        currentBlog.props.file.data.frontmatter.prev,
-        preview,
-        previewData
-      ),
-      siteConfig: { title: siteConfig.title },
+      data: JSON.parse(JSON.stringify(data)),
+      variables: {
+        relativePath: `${slug}.md`,
+      },
     },
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async function() {
-  const blogs = await fg(`./content/blog/**/*.md`)
+  const response = await fetch('http://localhost:4001/graphql', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `#graphql
+       query getBlogList {
+          getBlogList {
+            id
+            sys {
+              filename
+            }
+        }
+      }
+      `,
+      variables: {},
+    }),
+  })
+  const { data } = await response.json()
   return {
-    paths: blogs.map(file => {
-      const slug = fileToUrl(file, 'blog')
-      return { params: { slug } }
+    paths: data.getBlogList.map(blogItem => {
+      return { params: { slug: blogItem.sys.filename } }
     }),
     fallback: true,
   }
 }
 
 /*
- ** TINA FORM CONFIG --------------------------------------------------
- */
-
-const formOptions = {
-  label: 'Blog Post',
-  fields: [
-    {
-      label: 'Title',
-      name: 'frontmatter.title',
-      component: 'text',
-    },
-    {
-      label: 'Author',
-      name: 'frontmatter.author',
-      component: 'text',
-    },
-    /*
-     ** TODO: add this back in once
-     ** draft functionality works again
-     */
-    // {
-    //   name: 'frontmatter.draft',
-    //   component: 'toggle',
-    //   label: 'Draft',
-    // },
-    {
-      label: 'Date Posted',
-      name: 'frontmatter.date',
-      component: 'date',
-      dateFormat: 'MMMM DD YYYY',
-      timeFormat: false,
-    },
-    {
-      label: 'Blog Body',
-      name: 'markdownBody',
-      component: 'markdown',
-    },
-  ],
-}
-/*
  ** STYLES ---------------------------------------------------------
  */
 
+//  @ts-ignore
 const BlogWrapper = styled(Wrapper)`
   padding-top: 4rem;
   padding-bottom: 3rem;

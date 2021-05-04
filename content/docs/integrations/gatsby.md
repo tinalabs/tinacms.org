@@ -1,6 +1,7 @@
 ---
 id: /docs/integrations/gatsby
 title: Gatsby Integration
+_template: doc
 ---
 
 > **Note:** Building a CMS with Gatsby requires that you run a development server for content-editing. You can use a service like [Gatsby Cloud](/blog/using-tinacms-on-gatsby-cloud) or you can [run your own server](https://levelup.gitconnected.com/provision-setup-and-secure-a-tinacms-cloud-editor-on-aws-e96b0e060e7c)

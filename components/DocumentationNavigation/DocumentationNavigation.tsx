@@ -11,13 +11,19 @@ import { FallbackPlaceholder } from 'components/fallback-placeholder'
 import Search from '../search'
 import { HitsWrapper } from 'components/search/styles'
 import { searchIndices } from 'components/search/indices'
+import * as Tina from '../../.tina/__generated__/types'
 
 export interface DocsNavProps {
   navItems: any
+  navDoc: Tina.DocNav_Data
   guide: false | { category: string }
 }
 
-export function DocumentationNavigation({ navItems, guide }: DocsNavProps) {
+export function DocumentationNavigation({
+  navDoc,
+  navItems,
+  guide,
+}: DocsNavProps) {
   const [mobileNavIsOpen, setMobileNavIsOpen] = useState(false)
   const router = useRouter()
 
@@ -36,7 +42,11 @@ export function DocumentationNavigation({ navItems, guide }: DocsNavProps) {
         {router.isFallback ? (
           <FallbackPlaceholder />
         ) : (
-          <DocsNavigationList navItems={navItems} guide={guide} />
+          <DocsNavigationList
+            navDoc={navDoc}
+            navItems={navItems}
+            guide={guide}
+          />
         )}
       </DocsLeftSidebar>
       <Overlay

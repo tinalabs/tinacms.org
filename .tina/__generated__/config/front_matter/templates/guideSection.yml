@@ -1,0 +1,14 @@
+---
+name: guideSection
+label: Guide Section
+fields:
+  - name: title
+    type: text
+    label: Title
+  - name: subItems
+    type: field_group_list
+    label: Sub Items
+    fields:
+      - name: label
+        type: text
+        label: Label

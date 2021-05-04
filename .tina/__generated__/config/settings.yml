@@ -1,0 +1,29 @@
+---
+sections:
+  - label: Doc Nav
+    name: docNav
+    path: content/docNav
+    templates:
+      - docNav
+    type: directory
+    create: documents
+    match: '**/*.md'
+    new_doc_ext: md
+  - label: Doc
+    name: doc
+    path: content/docs
+    templates:
+      - doc
+    type: directory
+    create: documents
+    match: '**/*.md'
+    new_doc_ext: md
+  - label: Blog
+    name: blog
+    path: content/blog
+    templates:
+      - basic
+    type: directory
+    create: documents
+    match: '**/*.md'
+    new_doc_ext: md

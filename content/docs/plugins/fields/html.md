@@ -1,10 +1,11 @@
 ---
 title: HTML Field
-prev: /docs/plugins/fields/markdown
-next: /docs/plugins/fields/number
+prev: /content/docs/plugins/fields/markdown.md
+next: /content/docs/plugins/fields/number.md
 consumes:
   - file: /packages/tinacms/src/plugins/fields/HtmlFieldPlugin.tsx
     details: Shows markdown interface and config options
+_template: doc
 ---
 
 The `html` field represents a chunk of HTML content.

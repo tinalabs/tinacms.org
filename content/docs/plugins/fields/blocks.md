@@ -1,10 +1,11 @@
 ---
 title: Blocks Field
-prev: /docs/plugins/fields/group-list
-next: /docs/plugins/fields/date
+prev: /content/docs/plugins/fields/group-list.md
+next: /content/docs/plugins/fields/date.md
 consumes:
   - file: /packages/tinacms/src/plugins/fields/BlocksFieldPlugin.tsx
     details: Shows blocks interface
+_template: doc
 ---
 
 The **Blocks** field represents a list of items, similar to the [Group List](/docs/plugins/fields/group-list) field, but allows each entity in the list to have a unique shape.

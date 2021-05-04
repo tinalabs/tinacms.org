@@ -1,12 +1,13 @@
 ---
 title: Inline Text
-prev: /docs/ui/inline-editing
-next: /docs/ui/inline-editing/inline-textarea
+prev: /content/docs/ui/inline-editing.md
+next: /content/docs/ui/inline-editing/inline-textarea.md
 consumes:
   - file: /packages/react-tinacms-inline/src/inline-field-text.tsx
     description: Shows InlineText
   - file: /packages/react-tinacms-inline/src/inline-field.tsx
     description: Depends on InlineField
+_template: doc
 ---
 
 The `InlineText` component represents a **single line text input**. It should be used for content values that are short strings, for example, a page title.

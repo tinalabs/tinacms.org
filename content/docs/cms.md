@@ -1,6 +1,6 @@
 ---
 title: The CMS
-next: /docs/ui
+next: /content/docs/ui.md
 consumes:
   - file: /packages/tinacms/src/tina-cms.ts
     description: Creates TinaCMS instance and describes config
@@ -13,6 +13,7 @@ consumes:
   - file: /packages/react-toolbar/toolbar.ts
     description: Shows Toolbar state interface
 last_edited: '2020-07-31T16:18:02.673Z'
+_template: doc
 ---
 
 The CMS object in Tina is a container for attaching and accessing [Plugins](/docs/plugins), [APIs](/docs/apis), and the [Event Bus](/docs/events). On its own, the CMS does very little; however, since it's the central integration point for everything that Tina does, it's extremely important!
