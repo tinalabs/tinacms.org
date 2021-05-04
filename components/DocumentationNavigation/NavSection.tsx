@@ -5,6 +5,7 @@ import { NavListContext } from './DocsNavigationList'
 import RightArrowSvg from '../../public/svg/right-arrow.svg'
 import { DynamicLink } from '../ui/DynamicLink'
 import Link from 'next/link'
+import * as Tina from '../../.tina/__generated__/types'
 
 export interface NavSectionProps {
   id: string
@@ -19,33 +20,96 @@ export interface NavSectionProps {
   }
 }
 
-export const NavSection = (section: NavSectionProps) => {
+export const NavSection = (
+  section: { collapsible: boolean } & Tina.DocNav_Sections_Data
+) => {
+  switch (section.__typename) {
+    case 'DocSection_Data':
+      return <DocNavSection {...section} />
+
+    case 'GuideSection_Data':
+      return <div>{section.title}</div>
+  }
+}
+
+const DocNavSection = (
+  props: { collapsible: boolean } & Tina.DocSection_Data
+) => {
+  const [isOpen, setIsOpen] = useState(true)
+  return (
+    <NavItem open={isOpen}>
+      <NavItemHeader onClick={() => setIsOpen(!isOpen)}>
+        <NavSectionTitle currentPage={true}>{props.title}</NavSectionTitle>
+      </NavItemHeader>
+      <SubNav>
+        {props?.subItems?.map(item => {
+          return <SubItem {...item} />
+        })}
+      </SubNav>
+    </NavItem>
+  )
+}
+const SubItem = (props: Tina.DocSection_SubItems_Data) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const titleProps = props.subItems
+    ? {
+        onClick: () => setIsOpen(!isOpen),
+        currentPage: false,
+        as: 'span',
+      }
+    : {
+        // onClick: () => setIsOpen(!isOpen),
+        href: `/docs/${props?.value?.sys?.breadcrumbs.join('/')}`,
+        currentPage: false,
+        as: 'a',
+      }
+  return (
+    <NavSectionListItem>
+      <NavSectionTitle
+        hasChildren={props?.subItems?.length > 0}
+        {...titleProps}
+      >
+        {props.label}
+      </NavSectionTitle>
+      {props?.subItems &&
+        isOpen &&
+        props.subItems.map(subItem => {
+          return (
+            <NavSectionTitle currentPage={false} as="a">
+              {subItem.label}
+            </NavSectionTitle>
+          )
+        })}
+    </NavSectionListItem>
+  )
+}
+export const NavSection2 = (section: Tina.DocNav_Sections_Data) => {
   const router = useRouter()
   const currentPath = router.asPath
-  const isCurrentPage = useMemo(() => {
-    if (section.slug && currentPath === section.slug) {
-      return true
-    }
-  }, [section.slug, currentPath])
+  // const isCurrentPage = useMemo(() => {
+  //   if (section.slug && currentPath === section.slug) {
+  //     return true
+  //   }
+  // }, [section.slug, currentPath])
 
-  const collapsible = section.collapsible !== false
-  const [expanded, setExpanded] = useState(
-    menuIsActive(section, currentPath) || !collapsible
-  )
+  const collapsible = false
+  const [expanded, setExpanded] = useState(true)
 
-  useEffect(() => {
-    if (!collapsible) return
-    setExpanded(menuIsActive(section, currentPath))
-  }, [currentPath, collapsible])
+  // useEffect(() => {
+  //   if (!collapsible) return
+  //   setExpanded(menuIsActive(section, currentPath))
+  // }, [currentPath, collapsible])
 
-  const hasChildren = section.items && section.items.length > 0
-  const currentPage = isCurrentPage
+  const hasChildren = section.subItems && section.subItems.length > 0
+  // const currentPage = isCurrentPage
+  console.log('getsectin', section.subItems)
 
   return (
     <>
-      <NavItem key={section.slug} open={expanded}>
+      <NavItem open={expanded}>
         <NavItemHeader onClick={() => collapsible && setExpanded(!expanded)}>
-          {(section.slug || section.href) && !hasChildren ? (
+          <NavSectionTitle currentPage={true}>{section.title}</NavSectionTitle>
+          {/* {(section.slug || section.href) && !hasChildren ? (
             <NavLink
               router={router}
               section={section}
@@ -55,23 +119,21 @@ export const NavSection = (section: NavSectionProps) => {
             <NavSectionTitle currentPage={currentPage}>
               {section.title}
             </NavSectionTitle>
-          )}
+          )} */}
           {hasChildren && collapsible && <RightArrowSvg />}
         </NavItemHeader>
         {hasChildren && (
           <SubNav>
-            {section.slug && (
-              <NavSection
-                key={`${section.id}-overview`}
-                id={section.id}
-                slug={section.slug}
-                title="Overview"
-                items={null}
-              />
-            )}
-            {(section.items || []).map(item => (
-              <NavSection key={`${section.id}-${item.id}`} {...item} />
-            ))}
+            <NavSection
+              key={`${section.id}-overview`}
+              id={section.id}
+              slug={section.slug}
+              title="Overview"
+              items={null}
+            />
+            {section.subItems.map(item => {
+              return <NavSection key={`${section.id}-${item.id}`} {...item} />
+            })}
           </SubNav>
         )}
       </NavItem>
@@ -152,9 +214,12 @@ const NavItemHeader = styled.div`
 
 interface NavSectionTitleProps {
   open?: boolean
+  hasChildren?: boolean
   currentPage: boolean
   ref?: any
 }
+
+const NavSectionListItem = styled.li``
 
 const NavSectionTitle = styled.span<NavSectionTitleProps>`
   display: block;
@@ -164,6 +229,17 @@ const NavSectionTitle = styled.span<NavSectionTitleProps>`
   transition: all 180ms ease-out;
   font-family: var(--font-tuner);
   font-size: 1.125rem;
+  position: relative;
+  ${props =>
+    props.hasChildren &&
+    css`
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    `}
 
   ${props =>
     props.currentPage &&

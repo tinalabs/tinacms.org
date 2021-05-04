@@ -64,9 +64,10 @@ export type Section = {
   documents?: Maybe<Array<Maybe<Document>>>;
 };
 
-export type SectionDocumentUnion = Doc_Document | Blog_Document;
+export type SectionDocumentUnion = DocNav_Document | Doc_Document | Blog_Document;
 
 export type SectionParams = {
+  docNav?: Maybe<DocNav_Input>;
   doc?: Maybe<Doc_Input>;
   blog?: Maybe<Blog_Input>;
 };
@@ -75,6 +76,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument?: Maybe<Document>;
   updateDocument?: Maybe<SectionDocumentUnion>;
+  updateDocNavDocument?: Maybe<DocNav_Document>;
   updateDocDocument?: Maybe<Doc_Document>;
   updateBlogDocument?: Maybe<Blog_Document>;
 };
@@ -90,6 +92,12 @@ export type MutationAddPendingDocumentArgs = {
 export type MutationUpdateDocumentArgs = {
   relativePath?: Maybe<Scalars['String']>;
   params?: Maybe<SectionParams>;
+};
+
+
+export type MutationUpdateDocNavDocumentArgs = {
+  relativePath?: Maybe<Scalars['String']>;
+  params?: Maybe<DocNav_Input>;
 };
 
 
@@ -110,6 +118,8 @@ export type Query = {
   getDocument?: Maybe<SectionDocumentUnion>;
   getCollections?: Maybe<Array<Maybe<Section>>>;
   getCollection?: Maybe<Section>;
+  getDocNavDocument?: Maybe<DocNav_Document>;
+  getDocNavList?: Maybe<Array<Maybe<DocNav_Document>>>;
   getDocDocument?: Maybe<Doc_Document>;
   getDocList?: Maybe<Array<Maybe<Doc_Document>>>;
   getBlogDocument?: Maybe<Blog_Document>;
@@ -133,6 +143,11 @@ export type QueryGetCollectionArgs = {
 };
 
 
+export type QueryGetDocNavDocumentArgs = {
+  relativePath?: Maybe<Scalars['String']>;
+};
+
+
 export type QueryGetDocDocumentArgs = {
   relativePath?: Maybe<Scalars['String']>;
 };
@@ -140,6 +155,241 @@ export type QueryGetDocDocumentArgs = {
 
 export type QueryGetBlogDocumentArgs = {
   relativePath?: Maybe<Scalars['String']>;
+};
+
+export type DocNav_Data = DocNav_Doc_Data;
+
+export type DocNav_Input = {
+  docNav?: Maybe<DocNav_Doc_Input>;
+};
+
+export type DocNav_Values = DocNav_Doc_Values;
+
+export type DocNav_Form = DocNav_Doc_Form;
+
+export type DocNav_Document = Node & Document & {
+  __typename?: 'DocNav_Document';
+  id: Scalars['ID'];
+  sys?: Maybe<SystemInfo>;
+  data?: Maybe<DocNav_Data>;
+  values?: Maybe<DocNav_Values>;
+  form?: Maybe<DocNav_Form>;
+};
+
+export type DocSectionSubItems_SubItems_Data = {
+  __typename?: 'DocSectionSubItems_SubItems_Data';
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Doc_Document>;
+};
+
+export type DocSection_SubItems_Data = {
+  __typename?: 'DocSection_SubItems_Data';
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Doc_Document>;
+  subItems?: Maybe<Array<Maybe<DocSectionSubItems_SubItems_Data>>>;
+};
+
+export type DocSection_Data = {
+  __typename?: 'DocSection_Data';
+  id?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<DocSection_SubItems_Data>>>;
+};
+
+export type GuideSection_SubItems_Data = {
+  __typename?: 'GuideSection_SubItems_Data';
+  label?: Maybe<Scalars['String']>;
+};
+
+export type GuideSection_Data = {
+  __typename?: 'GuideSection_Data';
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<GuideSection_SubItems_Data>>>;
+};
+
+export type DocNav_Sections_Data = DocSection_Data | GuideSection_Data;
+
+export type DocNav_Doc_Data = {
+  __typename?: 'DocNav_Doc_Data';
+  title?: Maybe<Scalars['String']>;
+  sections?: Maybe<Array<Maybe<DocNav_Sections_Data>>>;
+  _body?: Maybe<Scalars['String']>;
+};
+
+export type DocSectionSubItems_SubItems_Values = {
+  __typename?: 'DocSectionSubItems_SubItems_Values';
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Reference']>;
+};
+
+export type DocSection_SubItems_Values = {
+  __typename?: 'DocSection_SubItems_Values';
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Reference']>;
+  subItems?: Maybe<Array<Maybe<DocSectionSubItems_SubItems_Values>>>;
+};
+
+export type DocSection_Values = {
+  __typename?: 'DocSection_Values';
+  id?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<DocSection_SubItems_Values>>>;
+  _template?: Maybe<Scalars['String']>;
+};
+
+export type GuideSection_SubItems_Values = {
+  __typename?: 'GuideSection_SubItems_Values';
+  label?: Maybe<Scalars['String']>;
+};
+
+export type GuideSection_Values = {
+  __typename?: 'GuideSection_Values';
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<GuideSection_SubItems_Values>>>;
+  _template?: Maybe<Scalars['String']>;
+};
+
+export type DocNav_Sections_Values = DocSection_Values | GuideSection_Values;
+
+export type DocNav_Doc_Values = {
+  __typename?: 'DocNav_Doc_Values';
+  title?: Maybe<Scalars['String']>;
+  sections?: Maybe<Array<Maybe<DocNav_Sections_Values>>>;
+  _body?: Maybe<Scalars['String']>;
+  _template?: Maybe<Scalars['String']>;
+};
+
+export type TextField = FormField & {
+  __typename?: 'TextField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+};
+
+export type SelectField = FormField & {
+  __typename?: 'SelectField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type DocSectionSubItems_SubItems_FormFieldsUnion = TextField | SelectField;
+
+export type DocSectionSubItems_SubItems_GroupListField = FormField & {
+  __typename?: 'DocSectionSubItems_SubItems_GroupListField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<DocSectionSubItems_SubItems_FormFieldsUnion>>>;
+};
+
+export type DocSection_SubItems_FormFieldsUnion = TextField | SelectField | DocSectionSubItems_SubItems_GroupListField;
+
+export type DocSection_SubItems_GroupListField = FormField & {
+  __typename?: 'DocSection_SubItems_GroupListField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<DocSection_SubItems_FormFieldsUnion>>>;
+};
+
+export type DocSection_FormFieldsUnion = TextField | DocSection_SubItems_GroupListField;
+
+export type DocSection_Form = {
+  __typename?: 'DocSection_Form';
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<DocSection_FormFieldsUnion>>>;
+};
+
+export type GuideSection_SubItems_FormFieldsUnion = TextField;
+
+export type GuideSection_SubItems_GroupListField = FormField & {
+  __typename?: 'GuideSection_SubItems_GroupListField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<GuideSection_SubItems_FormFieldsUnion>>>;
+};
+
+export type GuideSection_FormFieldsUnion = TextField | GuideSection_SubItems_GroupListField;
+
+export type GuideSection_Form = {
+  __typename?: 'GuideSection_Form';
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<GuideSection_FormFieldsUnion>>>;
+};
+
+export type DocNav_Sections_BlocksFieldTemplates = {
+  __typename?: 'DocNav_Sections_BlocksFieldTemplates';
+  docSection?: Maybe<DocSection_Form>;
+  guideSection?: Maybe<GuideSection_Form>;
+};
+
+export type DocNav_Sections_BlocksField = FormField & {
+  __typename?: 'DocNav_Sections_BlocksField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+  templates?: Maybe<DocNav_Sections_BlocksFieldTemplates>;
+};
+
+export type TextareaField = FormField & {
+  __typename?: 'TextareaField';
+  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  component?: Maybe<Scalars['String']>;
+};
+
+export type DocNav_Doc_FormFieldsUnion = TextField | DocNav_Sections_BlocksField | TextareaField;
+
+export type DocNav_Doc_Form = {
+  __typename?: 'DocNav_Doc_Form';
+  label?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<Maybe<DocNav_Doc_FormFieldsUnion>>>;
+};
+
+export type DocSectionSubItems_SubItems_Input = {
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type DocSection_SubItems_Input = {
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<DocSectionSubItems_SubItems_Input>>>;
+};
+
+export type DocSection_Input = {
+  id?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<DocSection_SubItems_Input>>>;
+};
+
+export type GuideSection_SubItems_Input = {
+  label?: Maybe<Scalars['String']>;
+};
+
+export type GuideSection_Input = {
+  title?: Maybe<Scalars['String']>;
+  subItems?: Maybe<Array<Maybe<GuideSection_SubItems_Input>>>;
+};
+
+export type Sections_Input = {
+  docSection?: Maybe<DocSection_Input>;
+  guideSection?: Maybe<GuideSection_Input>;
+};
+
+export type DocNav_Doc_Input = {
+  title?: Maybe<Scalars['String']>;
+  sections?: Maybe<Array<Maybe<Sections_Input>>>;
+  _body?: Maybe<Scalars['String']>;
 };
 
 export type Doc_Data = Doc_Doc_Data;
@@ -173,10 +423,10 @@ export type Doc_Doc_Data = {
   title?: Maybe<Scalars['String']>;
   author?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
-  prev?: Maybe<Blog_Document>;
+  prev?: Maybe<Doc_Document>;
   id?: Maybe<Scalars['String']>;
   last_edited?: Maybe<Scalars['String']>;
-  next?: Maybe<Blog_Document>;
+  next?: Maybe<Doc_Document>;
   consumes?: Maybe<Array<Maybe<Doc_Consumes_Data>>>;
   _body?: Maybe<Scalars['String']>;
 };
@@ -202,21 +452,6 @@ export type Doc_Doc_Values = {
   _template?: Maybe<Scalars['String']>;
 };
 
-export type TextField = FormField & {
-  __typename?: 'TextField';
-  name?: Maybe<Scalars['String']>;
-  label?: Maybe<Scalars['String']>;
-  component?: Maybe<Scalars['String']>;
-};
-
-export type SelectField = FormField & {
-  __typename?: 'SelectField';
-  name?: Maybe<Scalars['String']>;
-  label?: Maybe<Scalars['String']>;
-  component?: Maybe<Scalars['String']>;
-  options?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
 export type Doc_Consumes_FormFieldsUnion = TextField;
 
 export type Doc_Consumes_GroupListField = FormField & {
@@ -225,13 +460,6 @@ export type Doc_Consumes_GroupListField = FormField & {
   label?: Maybe<Scalars['String']>;
   component?: Maybe<Scalars['String']>;
   fields?: Maybe<Array<Maybe<Doc_Consumes_FormFieldsUnion>>>;
-};
-
-export type TextareaField = FormField & {
-  __typename?: 'TextareaField';
-  name?: Maybe<Scalars['String']>;
-  label?: Maybe<Scalars['String']>;
-  component?: Maybe<Scalars['String']>;
 };
 
 export type Doc_Doc_FormFieldsUnion = TextField | SelectField | Doc_Consumes_GroupListField | TextareaField;

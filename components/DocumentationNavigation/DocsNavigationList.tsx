@@ -7,8 +7,13 @@ import { NavSection } from './NavSection'
 
 export const NavListContext = createContext({ current: null })
 
-export const DocsNavigationList = ({ navItems, guide }: DocsNavProps) => {
+export const DocsNavigationList = ({
+  navItems,
+  navDoc,
+  guide,
+}: DocsNavProps) => {
   const navListRef = useRef<HTMLUListElement>(null)
+  console.log('docsnavlist', navDoc)
 
   return (
     <NavListContext.Provider value={navListRef}>
@@ -22,10 +27,14 @@ export const DocsNavigationList = ({ navItems, guide }: DocsNavProps) => {
             <Link href={`/guides#${guide.category}`}>{guide.category}</Link>
           </Breadcrumbs>
         )}
-        {navItems &&
+        {navDoc &&
+          navDoc.sections.map(section => (
+            <NavSection key={section.title} {...section} collapsible={false} />
+          ))}
+        {/* {navItems &&
           navItems.map(section => (
             <NavSection key={section.id} {...section} collapsible={false} />
-          ))}
+          ))} */}
       </ul>
     </NavListContext.Provider>
   )

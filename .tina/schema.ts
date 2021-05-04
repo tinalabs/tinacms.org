@@ -26,6 +26,116 @@ const consumesField = {
 export default defineSchema({
   collections: [
     {
+      label: 'Doc Nav',
+      name: 'docNav',
+      path: 'content/docNav',
+      templates: [
+        {
+          name: 'docNav',
+          label: 'Doc Nav',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+            },
+            {
+              name: 'sections',
+              type: 'blocks',
+              label: 'Sections',
+              templates: [
+                {
+                  name: 'docSection',
+                  label: 'Doc Section',
+                  fields: [
+                    {
+                      name: 'id',
+                      type: 'text',
+                      label: 'ID',
+                    },
+                    {
+                      name: 'slug',
+                      type: 'text',
+                      label: 'Slug',
+                    },
+                    {
+                      name: 'title',
+                      type: 'text',
+                      label: 'Title',
+                    },
+                    {
+                      name: 'subItems',
+                      type: 'group-list',
+                      label: 'Sub Items',
+                      fields: [
+                        {
+                          name: 'label',
+                          type: 'text',
+                          label: 'Label',
+                        },
+                        {
+                          name: 'value',
+                          type: 'reference',
+                          collection: 'doc',
+                          label: 'Value',
+                        },
+                        {
+                          name: 'subItems',
+                          type: 'group-list',
+                          label: 'subItems',
+                          fields: [
+                            {
+                              name: 'label',
+                              type: 'text',
+                              label: 'Label',
+                            },
+                            {
+                              name: 'value',
+                              type: 'reference',
+                              collection: 'doc',
+                              label: 'Value',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'guideSection',
+                  label: 'Guide Section',
+                  fields: [
+                    {
+                      name: 'title',
+                      type: 'text',
+                      label: 'Title',
+                    },
+                    {
+                      name: 'subItems',
+                      type: 'group-list',
+                      label: 'Sub Items',
+                      fields: [
+                        {
+                          name: 'label',
+                          type: 'text',
+                          label: 'Label',
+                        },
+                        // {
+                        //   name: 'value',
+                        //   type: 'text',
+                        //   label: 'Value',
+                        // },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
       label: 'Doc',
       name: 'doc',
       path: 'content/docs',
@@ -53,7 +163,7 @@ export default defineSchema({
               name: 'prev',
               type: 'reference',
               label: 'Prev',
-              collection: 'blog',
+              collection: 'doc',
             },
             {
               name: 'id',
@@ -69,7 +179,7 @@ export default defineSchema({
               name: 'next',
               type: 'reference',
               label: 'Next',
-              collection: 'blog',
+              collection: 'doc',
             },
             consumesField,
           ],
